@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth - Indian Furniture</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: url('./assets/images/loginpage2.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            perspective: 1000px;
+        }
+
+        .auth-container {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            transform: rotateY(0deg);
+            transition: transform 0.5s;
+        }
+
+        .auth-container:hover {
+            transform: rotateY(10deg);
+        }
+
+        .auth-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .google-button {
+            background-color: #db4437;
+        }
+
+        .facebook-button {
+            background-color: #3b5998;
+        }
+
+        .social-button img {
+            margin-right: 10px;
+        }
+
+        .social-button:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 10px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .toggle-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"></script>
+    <script type="module" src="./assets/js/firebase-config.js"></script>
+    <script type="module" src="./assets/js/firebase.js"></script>
+    <script type="module" src="./assets/js/auth.js"></script>
+</head>
+<body>
+    <div class="auth-container">
+        <h2 id="form-title">Login</h2>
+        <form id="auth-form">
+            <div class="form-group" id="name-group" style="display: none;">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="fName">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group" id="phone-group" style="display: none;">
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" name="phone">
+            </div>
+            <div class="form-group" id="address-group" style="display: none;">
+                <label for="address">Address</label>
+                <textarea id="address" name="address"></textarea>
+            </div>
+            <button type="submit" class="button" id="submit-button">Login</button>
+        </form>
+        <div class="social-login">
+            <button class="social-button google-button" id="google-signin">
+                <img src="./assets/images/Google.jpg" alt="Google Icon" width="50"> Sign in with Google
+            </button>
+            <button class="social-button facebook-button" id="facebook-signin">
+                <img src="./assets/images/Facebook-logo.jpg" alt="Facebook Icon" width="40"> Sign in with Facebook
+            </button>
+        </div>
+        <div class="toggle-link" id="toggle-link">Don't have an account? Register</div>
+        <div class="toggle-link" id="forgot-password-link">Forgot Password?</div>
+    </div>
+
+    <script type="module" src="./assets/js/login.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import { firebaseConfig } from "./assets/js/firebase-config.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const formTitle = document.getElementById('form-title');
+        const authForm = document.getElementById('auth-form');
+        const nameGroup = document.getElementById('name-group');
+        const phoneGroup = document.getElementById('phone-group');
+        const addressGroup = document.getElementById('address-group');
+        const submitButton = document.getElementById('submit-button');
+        const toggleLink = document.getElementById('toggle-link');
+        const forgotPasswordLink = document.getElementById('forgot-password-link');
+        const googleSignInButton = document.getElementById('google-signin');
+        const facebookSignInButton = document.getElementById('facebook-signin');
+
+        toggleLink.addEventListener('click', function() {
+            if (formTitle.textContent === 'Login') {
+                formTitle.textContent = 'Register';
+                nameGroup.style.display = 'block';
+                phoneGroup.style.display = 'block';
+                addressGroup.style.display = 'block';
+                submitButton.textContent = 'Register';
+                toggleLink.textContent = 'Already have an account? Login';
+            } else {
+                formTitle.textContent = 'Login';
+                nameGroup.style.display = 'none';
+                phoneGroup.style.display = 'none';
+                addressGroup.style.display = 'none';
+                submitButton.textContent = 'Login';
+                toggleLink.textContent = "Don't have an account? Register";
+            }
+        });
+
+        forgotPasswordLink.addEventListener('click', function() {
+            const email = prompt('Please enter your email address:');
+            if (email) {
+                sendPasswordResetEmail(auth, email)
+                    .then(() => {
+                        alert('Password reset email sent!');
+                    })
+                    .catch((error) => {
+                        alert('Error: ' + error.message);
+                    });
+            }
+        });
+
+        googleSignInButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('user', JSON.stringify(user));
+                    alert('Google sign-in successful');
+                    window.location.href = 'index.html';
+                })
+                .catch((error) => {
+                    alert('Google sign-in failed: ' + error.message);
+                });
+        });
+
+        facebookSignInButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            const provider = new FacebookAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('user', JSON.stringify(user));
+                    alert('Facebook sign-in successful');
+                    window.location.href = 'index.html';
+                })
+                .catch((error) => {
+                    alert('Facebook sign-in failed: ' + error.message);
+                });
+        });
+
+        authForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (formTitle.textContent === 'Login') {
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('user', JSON.stringify(userCredential.user));
+                        alert('Login successful');
+                        window.location.href = 'index.html';
+                    })
+                    .catch((error) => {
+                        console.error('Login error:', error);
+                        alert('Login failed: ' + error.message);
+                    });
+            } else {
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = { name, email, phone, address, uid: userCredential.user.uid };
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('user', JSON.stringify(user));
+                        alert('Registration successful');
+                        formTitle.textContent = 'Login';
+                        nameGroup.style.display = 'none';
+                        phoneGroup.style.display = 'none';
+                        addressGroup.style.display = 'none';
+                        submitButton.textContent = 'Login';
+                        toggleLink.textContent = "Don't have an account? Register";
+                    })
+                    .catch((error) => {
+                        console.error('Registration error:', error);
+                        alert('Registration failed: ' + error.message);
+                    });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const authBtn = document.getElementById('auth-btn');
+            const loginBtn = document.getElementById('login-btn');
+            if (user) {
+                authBtn.textContent = `Logout (${user.displayName || user.email})`;
+                authBtn.addEventListener('click', function() {
+                    localStorage.removeItem('user');
+                    localStorage.setItem('isLoggedIn', 'false');
+                    alert('Logged out');
+                    window.location.href = 'login.html';
+                });
+                loginBtn.style.display = 'none';
+            } else {
+                authBtn.textContent = 'Login/Signup';
+                authBtn.addEventListener('click', function() {
+                    window.location.href = 'login.html';
+                });
+                loginBtn.addEventListener('click', function() {
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+.modal {
+  @apply fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/5 bg-white shadow-lg rounded-lg z-50 p-5 max-h-4/5 overflow-y-auto;
+}
+
+.modal-content {
+  @apply flex flex-col;
+}
+
+.close-btn {
+  @apply self-end cursor-pointer text-2xl;
+}
+
+.address-item {
+  @apply flex justify-between items-center p-2 border border-gray-300 rounded-lg mb-2;
+}
+
+.card {
+  @apply bg-white rounded-lg shadow-lg p-5 mb-5;
+}
+
+.card h2 {
+  @apply mb-5 text-2xl;
+}
+
+.card p {
+  @apply mb-4 text-lg;
+}
+
+.card ul {
+  @apply list-none p-0;
+}
+
+.card ul li {
+  @apply mb-4;
+}
+
+.card button {
+  @apply inline-block py-2 px-5 bg-primary text-white rounded-lg cursor-pointer transition duration-300;
+}
+
+.card button:hover {
+  @apply bg-blue-700 transform scale-105;
+}

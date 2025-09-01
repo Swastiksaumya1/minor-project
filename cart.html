@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Shopping Cart</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <style>
+    body {
+      background-color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    header {
+      background-color: #ff7f50;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .cart-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      transition: all 0.3s ease;
+    }
+    
+    .cart-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .cart-item img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 1.5rem;
+    }
+    
+    .item-details {
+      flex: 1;
+    }
+    
+    .item-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .item-price {
+      color: #ff7f50;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    
+    .quantity-btn {
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      padding: 0.5rem 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .quantity-btn:hover {
+      background: #e9ecef;
+    }
+    
+    .quantity {
+      margin: 0 1rem;
+      font-weight: 500;
+    }
+    
+    .remove-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .remove-btn:hover {
+      background: #c82333;
+    }
+    
+    .cart-summary {
+      padding: 1.5rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    
+    .total-price {
+      font-size: 1.5rem;
+      color: #333;
+      font-weight: bold;
+      text-align: right;
+    }
+    
+    .checkout-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background: #ff7f50;
+      color: white;
+      border: none;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      gap: 0.5rem;
+    }
+
+    
+    .checkout-btn:hover {
+      background: #ff6347;
+    }
+
+    .clear-cart-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      gap: 0.5rem;
+    }
+
+
+    .clear-cart-btn:hover {
+      background: #c82333;
+    }
+
+    .continue-shopping-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      gap: 0.5rem;
+      text-decoration: none;
+      grid-column: span 2;
+    }
+
+
+    .continue-shopping-btn:hover {
+      background: #5a6268;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 4rem;
+      color: #666;
+    }
+    
+    .cart-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .empty-cart h2 {
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Your Shopping Cart</h1>
+  </header>
+  <main class="cart-container">
+    <div id="cart-items">
+      <div class="empty-cart">
+        <h2>Your cart is empty</h2>
+        <p>Start shopping to add items to your cart!</p>
+      </div>
+    </div>
+    <div class="cart-summary">
+      <div class="total-price">
+        Total: ₹<span id="cart-total">0.00</span>
+      </div>
+      <button class="checkout-btn" id="checkout-btn" onclick="window.location.href='checkout.html'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Proceed to Checkout
+      </button>
+      <button class="clear-cart-btn" onclick="clearCart()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        Clear Cart
+      </button>
+      <a href="index.html" class="continue-shopping-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Continue Shopping
+      </a>
+
+    </div>
+  </main>
+  <script>
+    // Load cart items from localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    function renderCart() {
+      const cartItems = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+      
+      if (cart.length === 0) {
+        cartItems.innerHTML = `
+          <div class="empty-cart">
+            <h2>Your cart is empty</h2>
+            <p>Start shopping to add items to your cart!</p>
+          </div>`;
+        cartTotal.textContent = '0.00';
+        return;
+      }
+      
+      let total = 0;
+      cartItems.innerHTML = cart.map(item => {
+        total += item.price * item.quantity;
+        return `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}">
+            <div class="item-details">
+              <div class="item-name">${item.name}</div>
+              <div class="item-price">₹${item.price.toFixed(2)}</div>
+              <div class="quantity-controls">
+                <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+                <span class="quantity">${item.quantity}</span>
+                <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+              </div>
+              <button class="remove-btn" onclick="removeItem('${item.id}')">Remove</button>
+            </div>
+          </div>`;
+      }).join('');
+      
+      cartTotal.textContent = total.toFixed(2);
+    }
+    
+    function updateQuantity(id, change) {
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.quantity += change;
+        if (item.quantity < 1) {
+          cart = cart.filter(i => i.id !== id);
+        }
+        saveCart();
+        renderCart();
+      }
+    }
+    
+    function removeItem(id) {
+      cart = cart.filter(i => i.id !== id);
+      saveCart();
+      renderCart();
+    }
+    
+    function saveCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      // Store cart total in localStorage
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      localStorage.setItem('cartTotal', total.toFixed(2));
+    }
+
+
+    function clearCart() {
+      if (confirm("Are you sure you want to clear your cart?")) {
+        cart = [];
+        saveCart();
+        renderCart();
+      }
+    }
+    
+    // Initial render
+    renderCart();
+  </script>
+</body>
+</html>

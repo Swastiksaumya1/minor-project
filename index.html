@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 
+    - primary meta tag
+  --> 
+  <title>Indian Furniture Homes</title>
+  <meta name="title" content="Woodex - Get Quality Furniture">
+  <meta name="description" content="This is an eCommerce html template made by codewithsadee">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mr+De+Haviland&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="./assets/images/hero-product-1.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-product-2.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-product-3.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-product-4.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-product-5.jpg">
+  <script type="module" src="login.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      if (!isLoggedIn) {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+
+  <style>
+    /* Add custom styles for better design */
+    .hero-card .card-content {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .hero-card .card-title {
+      color: #007bff;
+    }
+
+    .hero-card .card-title:hover {
+      color: #0056b3;
+    }
+
+    .product-card .card-title {
+      color: #007bff;
+    }
+
+    .product-card .card-title:hover {
+      color: #0056b3;
+    }
+
+    .product-card .card-price {
+      color: #28a745;
+    }
+
+    .product-card .card-price .del {
+      color: #dc3545;
+      text-decoration: line-through;
+    }
+
+    .blog-card .card-title {
+      color: #007bff;
+    }
+
+    .blog-card .card-title:hover {
+      color: #0056b3;
+    }
+
+    .newsletter-card .section-title {
+      color: #007bff;
+    }
+
+    .newsletter-card .section-text {
+      color: #555;
+    }
+
+    .footer-link:hover {
+      color: #007bff;
+    }
+
+    .footer-form-btn:hover {
+      color: #007bff;
+    }
+
+    .filter-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .filter-section select {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .logout-btn {
+      background-color: #ff7f50; /* Coral color */
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .logout-btn:hover {
+      background-color: #ff6347; /* Tomato color */
+      transform: scale(1.05);
+    }
+
+    .header-action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    .header-action-btn.medium {
+      font-size: 20px;
+    }
+
+    .header-action {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-action .logout-container {
+      display: flex;
+      align-items: center;
+      background-color: #ff7f50; /* Coral color */
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .header-action .logout-container:hover {
+      background-color: #ff6347; /* Tomato color */
+    }
+
+    .header-action .logout-container ion-icon {
+      font-size: 20px;
+      margin-right: 5px;
+    }
+
+    /* Improved styles for website name and logo */
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      color: #333;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-img img {
+      width: 60px;
+      height: auto;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+    }
+  </style>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+      <a href="index.html" class="logo-img">
+        <img src="./assets/images/logo.jpeg" alt="Company Logo">
+      </a>
+      <a href="index.html" class="logo">INDIAN FURNITURE HOUSE</a>
+  
+      <!-- Search Bar -->
+      <div class="input-wrapper">
+        <input type="search" name="search" placeholder="Search Anything..." class="input-field small-search" id="search-input" oninput="showSuggestions(this.value)">
+        <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+        <div id="suggestions-container" class="suggestions-container"></div>
+      </div>
+  
+      <!-- Header Actions -->
+      <div class="header-action">
+        <a href="account.html" class="header-action-btn" aria-label="user" id="user-btn">
+          <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+        </a>
+        <div class="logout-container">
+          <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+          <button class="logout-btn" id="auth-btn">Logout</button>
+        </div>
+        
+        <div class="user-menu" id="user-menu">
+          <a href="account.html" class="user-menu-item">My Account</a>
+          <a href="orders.html" class="user-menu-item">My Orders</a>
+          <a href="cart.html" class="user-menu-item">Cart</a>
+          <a href="favorite.html" class="user-menu-item">Wishlist</a>
+        </div>
+        <a href="favorite.html" class="header-action-btn" aria-label="favorite list">
+          <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
+          <span class="btn-badge">0</span>
+        </a>
+        <a href="cart.html" class="header-action-btn" aria-label="cart">
+          <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+          <span class="btn-badge">0</span>
+        </a>
+        <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
+          <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+  
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const user = JSON.parse(localStorage.getItem('user'));
+          const authBtn = document.getElementById('auth-btn');
+          const userMenu = document.getElementById('user-menu');
+  
+          if (user && localStorage.getItem('isLoggedIn') === 'true') {
+            authBtn.textContent = `Logout (${user.displayName || user.email})`;
+            authBtn.addEventListener('click', function () {
+              localStorage.removeItem('user');
+              localStorage.setItem('isLoggedIn', 'false');
+              alert('Logged out successfully');
+              window.location.reload();
+            });
+          } else {
+            authBtn.textContent = 'Login/Signup';
+            authBtn.addEventListener('click', function () {
+              window.location.href = 'login.html';
+            });
+          }
+        });
+      </script>
+    </div>
+  </header>
+  
+
+  <!-- 
+    - #SIDEBAR
+  -->
+
+  <div class="sidebar" data-navbar>
+    
+
+    <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+      <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+    </button>
+
+    <div class="wrapper"> 
+
+
+      <ul class="sidebar-list">
+        <li>
+          <div id="auth-sidebar-container">
+            <!-- Login/Signup button or username will be dynamically added here -->
+            
+            <ul class="sidebar-list">
+              <li>
+                  <p class="sidebar-list-title">User  Actions</p>
+              </li>
+              <li>
+                  <button class="user-menu-item" id="auth-btn">Login/Signup</button>
+              </li>
+          </ul>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+    <nav class="navbar">
+      <ul class="navbar-list">
+
+        <li class="navbar-item">
+          <a href="#home" class="navbar-link" data-nav-link>Home</a>
+        </li>
+
+        <li class="navbar-item">
+          <a href="#about" class="navbar-link" data-nav-link>About</a>
+        </li>
+
+        <li class="navbar-item">
+          <a href="#product" class="navbar-link" data-nav-link>Product</a>
+        </li>
+
+        <li class="navbar-item">
+          <a href="#blog" class="navbar-link" data-nav-link>Blogs</a>
+        </li>
+
+      </ul>
+    </nav>
+
+    <ul class="contact-list">
+
+      <li>
+        <p class="contact-list-title">Contact Us</p>
+      </li>
+
+      <li class="contact-item">
+        <address class="address">
+         01,MAIN ROAD ,NEW DELHI,INDIA
+        </address>
+      </li>
+
+      <li class="contact-item">
+        <a href="mailto:support.center@woodex.co" class="contact-link">support.center@Indian-Furniture.co</a>
+      </li>
+
+      <li class="contact-item">
+        <a href="#" class="contact-link">012345678</a>
+      </li>
+
+    </ul>
+
+    <div class="social-wrapper">
+
+      <p class="social-list-title">Follow US On Socials</p>
+
+      <ul class="social-list">
+
+        <li>
+          <a href="#" class="social-link">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a>
+        </li>
+
+        <li>
+          <a href="#" class="social-link">
+            <ion-icon name="logo-twitter"></ion-icon>
+          </a>
+        </li>
+
+        <li>
+          <a href="#" class="social-link">
+            <ion-icon name="logo-tumblr"></ion-icon>
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div class="overlay" data-overlay data-nav-toggler></div>
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="section hero" id="home" aria-label="home">
+        <div class="container">
+
+          <ul class="hero-list">
+
+            <li>
+              <div class="hero-card">
+
+                <figure class="card-banner img-holder" style="--width: 285; --height: 396;">
+                  <img src="./assets/images/hero-product-1.jpg" width="285" height="396" alt="Art Deco Home"
+                    class="img-cover">
+                </figure>
+
+                <div class="card-content">
+                  <h3>
+                    <a href="#" class="card-title">Art Deco Home</a>
+                  </h3>
+
+                  <p class="card-text">Decoration</p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="colspan-2">
+              <div class="hero-card">
+
+                <figure class="card-banner img-holder" style="--width: 568; --height: 389;">
+                  <img src="./assets/images/hero-product-2.jpg" width="568" height="389" alt="Helen Chair"
+                    class="img-cover">
+                </figure>
+
+                <div class="card-content">
+                  <h3>
+                    <a href="#" class="card-title">Helen Chair</a>
+                  </h3>
+
+                  <p class="card-text">Decoration</p>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="hero-card">
+
+                <figure class="card-banner img-holder" style="--width: 285; --height: 396;">
+                  <img src="./assets/images/hero-product-3.jpg" width="285" height="396" alt="Vase Of Flowers"
+                    class="img-cover">
+                </figure>
+
+                <div class="card-content">
+                  <h3>
+                    <a href="#" class="card-title">Vase Of Flowers</a>
+                  </h3>
+
+                  <p class="card-text">Decoration</p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="colspan-2">
+              <div class="hero-card">
+
+                <figure class="card-banner img-holder" style="--width: 580; --height: 213;">
+                  <img src="./assets/images/hero-product-4.jpg" width="580" height="213" alt="Wood Eggs"
+                    class="img-cover">
+                </figure>
+
+                <div class="card-content">
+                  <h3>
+                    <a href="#" class="card-title">Wood Eggs</a>
+                  </h3>
+
+                  <p class="card-text">Decoration</p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="colspan-2">
+              <div class="hero-card">
+
+                <figure class="card-banner img-holder" style="--width: 580; --height: 213;">
+                  <img src="./assets/images/hero-product-5.jpg" width="580" height="213" alt="Table Wood Pine"
+                    class="img-cover">
+                </figure>
+
+                <div class="card-content">
+                  <h3>
+                    <a href="#" class="card-title">Table Wood Pine</a>
+                  </h3>
+
+                  <p class="card-text">Furniture</p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+      <!-- 
+        - #ABOUT
+      -->
+
+      <section class="section about" id="about" aria-label="about">
+        <div class="container">
+
+          <h2 class="section-title">Indian Furniture Homes </h2>
+
+          <p class="section-text">
+            When you start with a portrait and search for a pure form, a clear volume, through successive eliminations,
+            you arrive
+            inevitably at the egg. Likewise, starting with the egg and following the same process in reverse, one
+            finishes with the
+            portrait.
+          </p>
+
+          <div class="about-card">
+            <figure class="card-banner img-holder" style="--width: 1170; --height: 450;">
+                <video id="promo-video" 
+                    src="assets/WhatsApp Video 2025-02-19 at 00.30.27_deed9758.mp4" 
+                    width="1170" height="450" 
+                    loading="lazy" class="img-cover">
+                </video>
+            </figure>
+        
+            <button id="play-btn" class="play-btn" aria-label="play video" onclick="toggleVideo()">
+                <ion-icon name="play-circle-outline" aria-hidden="true"></ion-icon>
+            </button>
+        </div>
+        
+        <script>
+            function toggleVideo() {
+                let video = document.getElementById("promo-video");
+                let playBtn = document.getElementById("play-btn");
+        
+                if (video.paused) {
+                    video.play();
+                    playBtn.style.display = "none"; // Hide play button when playing
+                } 
+            }
+        
+            // Show play button when video is paused or ended
+            document.getElementById("promo-video").addEventListener("pause", function() {
+                document.getElementById("play-btn").style.display = "block";
+            });
+        
+            document.getElementById("promo-video").addEventListener("ended", function() {
+                document.getElementById("play-btn").style.display = "block";
+            });
+        </script>
+        
+
+        </div>
+      </section>
+
+      <!-- 
+        - #PRODUCTS
+      -->
+
+      <section class="section product" id="product" aria-label="product">
+        <div class="container">
+
+          <div class="title-wrapper">
+            <h2 class="h2 section-title">Popular Products</h2>
+
+            <div class="filter-section">
+              <select id="sort-select">
+                <option value="all">All Products</option>
+                <option value="low-to-high">Price: Low to High</option>
+                <option value="high-to-low">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+
+          <ul class="grid-list product-list" id="product-list" data-filter="all">
+
+      </section>
+
+      <!-- 
+        - #NEWSLETTER
+      -->
+
+      <section class="section newsletter" aria-label="newsletter">
+        <div class="container">
+
+          <div class="newsletter-card">
+
+            <div class="card-content">
+              <h2 class="h2 section-title">Our Newsletter</h2>
+
+              <p class="section-text">
+                Subscribe our newsletter and get discount 50% off
+              </p>
+            </div>
+
+            <form action="" class="card-form">
+              <input type="email" name="email_address" placeholder="Your email address" required class="email-field">
+
+              <button type="submit" class="newsletter-btn" aria-label="subscribe">
+                <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+              </button>
+            </form>
+
+          </div>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer-top section">
+
+        <div class="footer-brand">
+
+          <a href="login.html" class="logo">INDIAN FURNITURE HOUSE</a>
+
+          <ul>
+
+            <li class="footer-list-item">
+              <ion-icon name="location-sharp" aria-hidden="true"></ion-icon>
+
+              <address class="address">
+                01,MAIN ROAD ,NEW DELHI,INDIA
+              </address>
+            </li>
+
+            <li class="footer-list-item">
+              <ion-icon name="call-sharp" aria-hidden="true"></ion-icon>
+
+              <a href="#" class="footer-link">+1234567890</a>
+            </li>
+
+            <li>
+              <ul class="social-list">
+
+                <li>
+                  <a href="https://www.facebook.com/" class="social-link">
+                    <ion-icon name="logo-facebook"></ion-icon>
+                  </a>
+                </li>
+
+                <li>
+                  <a href="https://x.com/" class="social-link">
+                    <ion-icon name="logo-twitter"></ion-icon>
+                  </a>
+                </li>
+
+                <li>
+                  <a href="#" class="social-link">
+                    <ion-icon name="logo-tumblr"></ion-icon>
+                  </a>
+                </li>
+
+              </ul>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Help & Information</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Help & Contact Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Returns & Refunds</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Online Stores</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Terms & Conditions</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">About Us</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">About Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">What We Do</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">FAQ Page</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Contact Us</a>
+          </li>
+
+        </ul>
+
+        <div class="footer-list">
+
+          <p class="footer-list-title">Newsletter</p>
+
+          <form action="" class="footer-form">
+            <input type="email" name="email_address" placeholder="Your email address" required class="email-field">
+
+            <button type="submit" class="footer-form-btn">
+              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+            </button>
+          </form>
+
+          <div class="wrapper">
+
+            <a href="#" class="footer-link">Term & Condition</a>
+            <a href="#" class="footer-link">Policy</a>
+            <a href="#" class="footer-link">Map</a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+
+       
+
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js" defer></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    import { getFirestore, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+    const db = getFirestore();
+
+    async function addToFavorites(id, name, price, image) {
+      const favoriteItem = { id, name, price, image };
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      if (!favorites.some(item => item.id === id)) {
+        favorites.push(favoriteItem);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        updateWishlistCount();
+        alert('Item added to favorites');
+
+        // Update Firestore
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+          const userRef = doc(db, "users", user.email);
+          await updateDoc(userRef, {
+            favorites: arrayUnion(favoriteItem)
+          });
+        }
+      } else {
+        alert('Item is already in favorites');
+      }
+    }
+
+    function addToCart(id, name, price, image) {
+      const cartItem = { id, name, price: parseFloat(price), image, quantity: 1 };
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      
+      const existingItemIndex = cart.findIndex(item => item.id === id);
+      if (existingItemIndex !== -1) {
+        cart[existingItemIndex].quantity += 1;
+      } else {
+        cart.push(cartItem);
+      }
+      
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      alert('Item added to cart');
+      window.location.href = 'cart.html';
+
+      // Update Firestore
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        const userRef = doc(db, "users", user.email);
+        updateDoc(userRef, {
+          cart: arrayUnion(cartItem)
+        });
+      }
+    }
+
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+      document.querySelector('.header-action-btn[aria-label="cart"] .btn-badge').textContent = cartCount;
+    }
+
+    function updateWishlistCount() {
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      const wishlistCount = favorites.length;
+      document.querySelector('.header-action-btn[aria-label="favorite list"] .btn-badge').textContent = wishlistCount;
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('theme-toggle');
+      body.classList.toggle('dark-theme');
+      if (body.classList.contains('dark-theme')) {
+        themeToggle.innerHTML = '<ion-icon name="sunny-outline" aria-hidden="true"></ion-icon>';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeToggle.innerHTML = '<ion-icon name="moon-outline" aria-hidden="true"></ion-icon>';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCartCount();
+      updateWishlistCount();
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        document.getElementById('theme-toggle').innerHTML = '<ion-icon name="sunny-outline" aria-hidden="true"></ion-icon>';
+      }
+    });
+
+    function showSuggestions(query) {
+      const suggestionsContainer = document.getElementById('suggestions-container');
+      suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+
+      if (query.length === 0) {
+        return; // Exit if query is empty
+      }
+
+      const products = [
+        { id: 'product-1', name: 'Animi Dolor Pariatur', price: '100.00', image: './assets/images/product-1.jpg' },
+        { id: 'product-2', name: 'Art Deco Home', price: '300.00', image: './assets/images/product-2.jpg' },
+        { id: 'product-3', name: 'Artificial potted plant', price: '4000.00', image: './assets/images/product-3.jpg' },
+        { id: 'product-4', name: 'Dark Green Jug', price: '1700.10', image: './assets/images/product-4.jpg' },
+        { id: 'product-5', name: 'Drinking Glasses', price: '2100.00', image: './assets/images/product-5.jpg' },
+        { id: 'product-6', name: 'Helen Chair', price: '6900.50', image: './assets/images/product-6.jpg' },
+        { id: 'product-7', name: 'High Quality Glass Bottle', price: '300.10', image: './assets/images/product-7.jpg' },
+        { id: 'product-8', name: 'Living Room & Bedroom Lights', price: '4500.00', image: './assets/images/product-8.jpg' },
+        { id: 'product-9', name: 'Nancy Chair', price: '900.00', image: './assets/images/product-9.jpg' },
+        { id: 'product-10', name: 'Simple Chair', price: '400.00', image: './assets/images/product-10.jpg' },
+        { id: 'product-11', name: 'Smooth Disk', price: '4600.00', image: './assets/images/product-11.jpg' },
+        { id: 'product-12', name: 'Table Black', price: '6700.00', image: './assets/images/product-12.jpg' },
+        { id: 'product-13', name: 'Table Wood Pine', price: '5000.00', image: './assets/images/product-13.jpg' },
+        { id: 'product-14', name: 'Teapot with black tea', price: '2500.00', image: './assets/images/product-14.jpg' },
+        { id: 'product-15', name: 'Unique Decoration', price: '1500.00', image: './assets/images/product-15.jpg' },
+        { id: 'product-16', name: 'Vase Of Flowers', price: '7700.00', image: './assets/images/product-16.jpg' },
+        { id: 'product-17', name: 'Wood Eggs', price: '1900.00', image: './assets/images/product-17.jpg' },
+        { id: 'product-18', name: 'Wooden Box', price: '2700.00', image: './assets/images/product-18.jpg' },
+        { id: 'product-19', name: 'Wooden Cups', price: '290.00', image: './assets/images/product-19.jpg' },
+        { id: 'product-Indian-Chair', name: 'Indian-Chair', price: '2229.00', image: './assets/images/new images/Indian-Chair-.webp' },
+        { id: 'product-berggrune', name: 'berggrune', price: '2999.00', image: './assets/images/new images/berggrune.webp' },
+        { id: 'product-chair', name: 'chair', price: '3999.00', image: './assets/images/new images/chair.webp' },
+        { id: 'product-Whitewashed', name: 'Whitewashed', price: '1999.00', image: './assets/images/new images/Design-Element-4-Whitewashed-300x300.webp' },
+        { id: 'product-Exquisite Indian Bone Inlay Jar Set', name: 'Exquisite Indian Bone Inlay Jar Set', price: '999.00', image: './assets/images/new images/Exquisite_Indian_Bone_Inlay_Jar_Set__15189.1717154889.webp' },
+        { id: 'product-Mirror', name: 'Mirror', price: '699.00', image: './assets/images/new images/mirror.webp' },
+        { id: 'product-Pillow', name: 'Pillow', price: '399.00', image: './assets/images/new images/Pillow.webp' },
+        { id: 'Table Self-product', name: 'Table Self', price: '999.00', image: './assets/images/new images/Self.webp' },
+        { id: 'Sofa-1', name: 'Sofa', price: '3999.00', image: './assets/images/new images/Sofa.webp' },
+        { id: 'Wooden Tool', name: 'Wooden Tool', price: '3699.00', image: './assets/images/new images/Wooden Tool .webp' },
+        { id: 'rustic_wooden_dining_table ', name: 'Dining Table', price: 15000.00, image: 'assets/images/new images/1 rustic_wooden_dining_table .png', category: 'accessory' },
+      { id: 'round_marble_side_table', name: 'Side Table', price: 200.00, image: 'assets/images/new images/2 round_marble_side_table-removebg-preview.png', category: 'chair' },
+      { id: 'minimalist_coffee_table', name: 'Minimalist Coffee Table', price: 1200.00, image: 'assets/images/new images/3 minimalist_coffee_table-removebg-preview.png', category: 'table' },
+      { id: 'industrial_work_desk', name: 'Industrial Work Desk', price: 300.00, image: 'assets/images/new images/4 industrial_work_desk-removebg-preview.png', category: 'accessory' },
+      { id: 'glass_top_console_table', name: 'Glass Top Console Table', price: 80.00, image: 'assets/images/new images/5 glass_top_console_table-removebg-preview.png', category: 'decoration' },
+      { id: 'reclining_home_theater_sofa', name: ' Home Theater Sofa', price: 500.00, image: 'assets/images/new images/6 reclining_home_theater_sofa-removebg-preview.png', category: 'accessory' },
+      { id: 'shaped_sectional_sofa', name: 'Shaped Sectional Sofa', price: 200.00, image: 'assets/images/new images/7modern_l_shaped_sectional_sofa-removebg-preview.png', category: 'sofa' },
+      { id: 'frameless_wall_mirror', name: 'Frameless Wall Mirror', price: 700.00, image: 'assets/images/new images/frameless_wall_mirror-removebg-preview.png', category: 'table' },
+      { id: 'chesterfield_leather_sofa', name: 'Leather Sofa', price: 1800.00, image: 'assets/images/new images/10 chesterfield_leather_sofa-removebg-preview.png', category: 'sofa' }
+      ];
+
+      const filteredProducts = products.filter(product => product.name.toLowerCase().includes(query.toLowerCase()));
+
+      filteredProducts.forEach(product => {
+        const suggestionItem = document.createElement('div');
+        suggestionItem.classList.add('suggestion-item');
+        suggestionItem.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" class="suggestion-image">
+          <div class="suggestion-details">
+            <span class="suggestion-name">${product.name}</span>
+            <span class="suggestion-price">₹${parseFloat(product.price).toFixed(2)}</span>
+          </div>
+        `;
+        suggestionItem.onclick = () => {
+          window.location.href = `#${product.id}`;
+        };
+        suggestionsContainer.appendChild(suggestionItem);
+      });
+    }
+
+    document.getElementById('user-btn').addEventListener('click', function() {
+      document.getElementById('user-menu').classList.toggle('active');
+    });
+
+    document.getElementById('auth-btn').addEventListener('click', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      if (isLoggedIn) {
+        localStorage.setItem('isLoggedIn', 'false');
+        alert('Logged out');
+        window.location.href = 'index.html';
+      } else {
+        window.location.href = 'login.html';
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      document.getElementById('auth-btn').textContent = isLoggedIn ? 'Logout' : 'Login/Signup';
+    });
+
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('#user-btn') && !event.target.closest('#user-menu')) {
+        document.getElementById('user-menu').classList.remove('active');
+      }
+    });
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+  <script>
+    let db;
+
+    async function initDatabase() {
+      const SQL = await initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}` });
+      const dbFile = await fetch('./assets/db/woodex.db');
+      const dbBuffer = await dbFile.arrayBuffer();
+      db = new SQL.Database(new Uint8Array(dbBuffer));
+    }
+
+    document.addEventListener('DOMContentLoaded', initDatabase);
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        document.getElementById('auth-btn').textContent = 'Logout';
+      }
+    });
+
+    document.getElementById('auth-btn').addEventListener('click', function() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        localStorage.removeItem('user');
+        alert('Logged out');
+        window.location.href = 'index.html';
+      } else {
+        window.location.href = 'login.html';
+      }
+    });
+
+    const productList = document.getElementById('product-list');
+    const sortSelect = document.getElementById('sort-select');
+
+    const products = [
+      { id: 'product-1', name: 'Animi Dolor Pariatur', price: 100.00, image: './assets/images/product-1.jpg', category: 'decoration' },
+      { id: 'product-2', name: 'Art Deco Home', price: 300.00, image: './assets/images/product-2.jpg', category: 'decoration' },
+      { id: 'product-3', name: 'Artificial potted plant', price: 400.00, image: './assets/images/product-3.jpg', category: 'decoration' },
+      { id: 'product-4', name: 'Dark Green Jug', price: 1700.10, image: './assets/images/product-4.jpg', category: 'accessory' },
+      { id: 'product-5', name: 'Drinking Glasses', price: 2100.00, image: './assets/images/product-5.jpg', category: 'accessory' },
+      { id: 'product-6', name: 'Helen Chair', price: 6900.50, image: './assets/images/product-6.jpg', category: 'furniture' },
+      { id: 'product-7', name: 'High Quality Glass Bottle', price: 300.10, image: './assets/images/product-7.jpg', category: 'accessory' },
+      { id: 'product-8', name: 'Living Room & Bedroom Lights', price: 4500.00, image: './assets/images/product-8.jpg', category: 'accessory' },
+      { id: 'product-9', name: 'Nancy Chair', price: 900.00, image: './assets/images/product-9.jpg', category: 'furniture' },
+      { id: 'product-10', name: 'Simple Chair', price: 400.00, image: './assets/images/product-10.jpg', category: 'furniture' },
+      { id: 'product-11', name: 'Smooth Disk', price: 4600.00, image: './assets/images/product-11.jpg', category: 'decoration' },
+      { id: 'product-12', name: 'Table Black', price: 6700.00, image: './assets/images/product-12.jpg', category: 'furniture' },
+      { id: 'product-13', name: 'Table Wood Pine', price: 5000.00, image: './assets/images/product-13.jpg', category: 'furniture' },
+      { id: 'product-14', name: 'Teapot with black tea', price: 2500.00, image: './assets/images/product-14.jpg', category: 'accessory' },
+      { id: 'product-15', name: 'Unique Decoration', price: 1500.00, image: './assets/images/product-15.jpg', category: 'decoration' },
+      { id: 'product-16', name: 'Vase Of Flowers', price: 7700.00, image: './assets/images/product-16.jpg', category: 'decoration' },
+      { id: 'product-17', name: 'Wood Eggs', price: 1900.00, image: './assets/images/product-17.jpg', category: 'decoration' },
+      { id: 'product-18', name: 'Wooden Box', price: 2700.00, image: './assets/images/product-18.jpg', category: 'decoration' },
+      { id: 'product-19', name: 'Wooden Cups', price: 290.00, image: './assets/images/product-19.jpg', category: 'accessory' },
+      { id: 'product-Indian-Chair', name: 'Indian-Chair', price: 2229.00, image: './assets/images/new images/Indian-Chair-.webp', category: 'accessory' },
+      { id: 'product-berggrune', name: 'berggrune', price: 2999.00, image: './assets/images/new images/berggrune.webp', category: 'accessory' },
+      { id: 'product-chair', name: 'chair', price: 3999.00, image: './assets/images/new images/chair.webp', category: 'accessory' },
+      { id: 'product-Whitewashed', name: 'Whitewashed', price: 1999.00, image: './assets/images/new images/Design-Element-4-Whitewashed-300x300.webp', category: 'accessory' },
+      { id: 'product-Exquisite Indian Bone Inlay Jar Set', name: 'Exquisite Indian Bone Inlay Jar Set', price: 999.00, image: './assets/images/new images/Exquisite_Indian_Bone_Inlay_Jar_Set__15189.1717154889.webp', category: 'accessory' },
+      { id: 'product-Mirror', name: 'Mirror', price: 699.00, image: './assets/images/new images/mirror.webp', category: 'accessory' },
+      { id: 'product-Pillow', name: 'Pillow', price: 399.00, image: './assets/images/new images/Pillow.webp', category: 'accessory' },
+      { id: 'Table Self-product', name: 'Table Self', price: 999.00, image: './assets/images/new images/Self.webp', category: 'accessory' },
+      { id: 'Sofa-1', name: 'Sofa', price: 3999.00, image: './assets/images/new images/Sofa.webp', category: 'accessory' },
+      { id: 'Wooden Tool', name: 'Wooden Tool', price: 3699.00, image: './assets/images/new images/Wooden Tool .webp', category: 'accessory' },
+      { id: 'rustic_wooden_dining_table ', name: 'Dining Table', price: 15000.00, image: 'assets/images/new images/1 rustic_wooden_dining_table .png', category: 'accessory' },
+
+      { id: 'round_marble_side_table', name: 'Side Table', price: 200.00, image: 'assets/images/new images/2 round_marble_side_table-removebg-preview.png', category: 'chair' },
+
+      { id: 'minimalist_coffee_table', name: 'Minimalist Coffee Table', price: 1200.00, image: 'assets/images/new images/3 minimalist_coffee_table-removebg-preview.png', category: 'table' },
+      { id: 'industrial_work_desk', name: 'Industrial Work Desk', price: 300.00, image: 'assets/images/new images/4 industrial_work_desk-removebg-preview.png', category: 'accessory' },
+      { id: 'glass_top_console_table', name: 'Glass Top Console Table', price: 80.00, image: 'assets/images/new images/5 glass_top_console_table-removebg-preview.png', category: 'decoration' },
+      { id: 'reclining_home_theater_sofa', name: ' Home Theater Sofa', price: 500.00, image: 'assets/images/new images/6 reclining_home_theater_sofa-removebg-preview.png', category: 'accessory' },
+      { id: 'shaped_sectional_sofa', name: 'Shaped Sectional Sofa', price: 200.00, image: 'assets/images/new images/7modern_l_shaped_sectional_sofa-removebg-preview.png', category: 'sofa' },
+      { id: 'frameless_wall_mirror', name: 'Frameless Wall Mirror', price: 700.00, image: 'assets/images/new images/frameless_wall_mirror-removebg-preview.png', category: 'table' },
+      { id: 'chesterfield_leather_sofa', name: 'Leather Sofa', price: 1800.00, image: 'assets/images/new images/10 chesterfield_leather_sofa-removebg-preview.png', category: 'sofa' }
+    ];
+
+    function renderProducts(products) {
+      productList.innerHTML = '';
+      products.forEach(product => {
+        const li = document.createElement('li');
+        li.classList.add('product-card');
+        li.classList.add(product.category); // Add category class for filtering
+        li.innerHTML = `
+          <a href="#" class="card-banner img-holder has-before" style="--width: 300; --height: 300;">
+            <img src="${product.image}" width="300" height="300" loading="lazy" alt="${product.name}" class="img-cover">
+            <ul class="card-action-list">
+              <li>
+                <button class="card-action-btn" aria-label="add to cart" title="add to cart" onclick="addToCart('${product.id}', '${product.name}', '${product.price}', '${product.image}')">
+                  <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                </button>
+              </li>
+              <li>
+                <button class="card-action-btn" aria-label="add to wishlist" title="add to wishlist" onclick="addToFavorites('${product.id}', '${product.name}', '${product.price}', '${product.image}')">
+                  <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
+                </button>
+              </li>
+            </ul>
+          </a>
+          <div class="card-content">
+            <h3 class="h3">
+              <a href="#" class="card-title">${product.name}</a>
+            </h3>
+            <div class="card-price">
+              <data class="price" value="${product.price}">₹${product.price.toFixed(2)}</data>
+            </div>
+          </div>
+        `;
+        productList.appendChild(li);
+      });
+    }
+
+    function sortProducts(criteria) {
+      let sortedProducts = [...products];
+      if (criteria === 'low-to-high') {
+        sortedProducts.sort((a, b) => a.price - b.price);
+      } else if (criteria === 'high-to-low') {
+        sortedProducts.sort((a, b) => b.price - a.price);
+      }
+      renderProducts(sortedProducts);
+    }
+
+    sortSelect.addEventListener('change', function() {
+      const criteria = sortSelect.value;
+      sortProducts(criteria);
+    });
+
+    renderProducts(products);
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (!isLoggedIn) {
+      window.location.href = 'login.html';
+    } else {
+      document.getElementById('auth-btn').textContent = 'Logout';
+    }
+  });
+
+  document.getElementById('auth-btn').addEventListener('click', function() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (isLoggedIn) {
+      localStorage.setItem('isLoggedIn', 'false');
+      localStorage.removeItem('user');
+      alert('Logged out');
+      window.location.href = 'login.html';
+    } else {
+      window.location.href = 'login.html';
+    }
+  });
+
+  document.getElementById('user-btn').addEventListener('click', function() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (isLoggedIn) {
+      window.location.href = 'account.html';
+    } else {
+      window.location.href = 'login.html';
+    }
+  });
+
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('#user-btn') && !event.target.closest('#user-menu')) {
+      document.getElementById('user-menu').classList.remove('active');
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const authSidebarContainer = document.getElementById('auth-sidebar-container');
+
+    if (user) {
+        authSidebarContainer.innerHTML = `<span>Welcome, ${user.displayName || user.email}</span>`;
+    } else {
+        authSidebarContainer.innerHTML = '<button class="button" onclick="window.location.href=\'login.html\'">Login</button>';
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const authContainer = document.getElementById('auth-sidebar-container');
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user) {
+      authContainer.innerHTML = `<span>Welcome, ${user.username}</span>`;
+    } else {
+      authContainer.innerHTML = `<button id="login-button" class="sidebar-link">Login</button>`;
+    }
+
+    document.getElementById('login-button')?.addEventListener('click', function() {
+      // Add your login logic here
+      alert('Login button clicked');
+    });
+  });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authBtn = document.getElementById('auth-btn');
+        if (user) {
+            authBtn.textContent = `Logout (${user.displayName || user.email})`;
+            authBtn.addEventListener('click', function() {
+                localStorage.removeItem('user');
+                localStorage.setItem('isLoggedIn', 'false');
+                alert('Logged out');
+                window.location.href = 'login.html';
+            });
+        } else {
+            authBtn.textContent = 'Login/Signup';
+            authBtn.addEventListener('click', function() {
+                window.location.href = 'login.html';
+            });
+        }
+    });
+</script>
+
+</body>
+
+</html>
+

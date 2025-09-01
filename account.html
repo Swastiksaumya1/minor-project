@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account - INDIAN FURNITURE HOUSE</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./src/index.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Header -->
+  <header class="header bg-white shadow-md py-4">
+    <div class="container mx-auto flex justify-between items-center px-4">
+      <a href="index.html" class="flex items-center">
+        <img src="./assets/images/logo.jpeg" alt="Company Logo" class="w-12 h-12 mr-2">
+        <span class="text-2xl font-bold">INDIAN FURNITURE HOUSE</span>
+      </a>
+      <div class="flex items-center space-x-4">
+        <a href="account.html" class="text-gray-600 hover:text-gray-900" aria-label="user" id="user-btn">
+          <ion-icon name="person-outline" class="text-2xl"></ion-icon>
+        </a>
+        <div class="flex items-center space-x-2 bg-red-500 text-white px-3 py-1 rounded-lg cursor-pointer" id="logout-container">
+          <ion-icon name="log-out-outline" class="text-xl"></ion-icon>
+          <button class="text-sm" id="auth-btn">Logout</button>
+        </div>
+        <a href="favorite.html" class="relative text-gray-600 hover:text-gray-900" aria-label="favorite list">
+          <ion-icon name="heart-outline" class="text-2xl"></ion-icon>
+          <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">0</span>
+        </a>
+        <a href="cart.html" class="relative text-gray-600 hover:text-gray-900" aria-label="cart">
+          <ion-icon name="bag-handle-outline" class="text-2xl"></ion-icon>
+          <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">0</span>
+        </a>
+        <button class="text-gray-600 hover:text-gray-900" aria-label="open menu" data-nav-toggler>
+          <ion-icon name="menu-outline" class="text-2xl"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Account Page Content -->
+  <main class="container mx-auto py-10 px-4">
+    <div class="account-container bg-white p-6 rounded-lg shadow-lg">
+      <h1 class="text-3xl font-bold mb-6">Welcome to Your Account</h1>
+      <p class="text-lg mb-6">Manage your personal information, orders, and wishlist here.</p>
+
+      <!-- Account Info Section -->
+      <div class="card bg-gray-50 p-4 rounded-lg shadow-md mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Account Information</h2>
+        <p class="text-lg"><strong>Name:</strong> <span id="user-name"></span></p>
+        <p class="text-lg"><strong>Email:</strong> <span id="user-email"></span></p>
+      </div>
+
+      <!-- Addresses Section -->
+      <div class="card bg-gray-50 p-4 rounded-lg shadow-md mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Addresses</h2>
+        <div id="addresses-container"></div>
+        <button id="address-btn" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">Add New Address</button>
+      </div>
+
+      <!-- Orders Section -->
+      <div class="card bg-gray-50 p-4 rounded-lg shadow-md mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Your Orders</h2>
+        <ul class="list-disc pl-5" id="orders-list"></ul>
+        <a href="cart.html" class="view-orders-btn mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">View All Orders</a>
+      </div>
+
+      <!-- Wishlist Section -->
+      <div class="card bg-gray-50 p-4 rounded-lg shadow-md mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Your Wishlist</h2>
+        <ul class="list-disc pl-5" id="wishlist-list"></ul>
+        <a href="favorite.html" class="view-wishlist-btn mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">View Wishlist</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-800 text-white py-4">
+    <p class="text-center">&copy; 2024 INDIAN FURNITURE HOUSE. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Edit Account Info Modal -->
+  <div id="edit-account-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="modal-content bg-white p-6 rounded-lg shadow-lg relative">
+      <span class="close-btn text-gray-600 cursor-pointer absolute top-2 right-2">&times;</span>
+      <h2 class="text-2xl font-semibold mb-4">Edit Account Information</h2>
+      <form id="edit-account-form">
+        <label for="edit-name" class="block text-lg mb-2">Name:</label>
+        <input type="text" id="edit-name" name="name" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+        <label for="edit-email" class="block text-lg mb-2">Email:</label>
+        <input type="email" id="edit-email" name="email" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+        <label for="edit-street" class="block text-lg mb-2">Street:</label>
+        <input type="text" id="edit-street" name="street" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+        <label for="edit-locality" class="block text-lg mb-2">Locality:</label>
+        <input type="text" id="edit-locality" name="locality" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+        <label for="edit-pincode" class="block text-lg mb-2">Pin Code:</label>
+        <input type="text" id="edit-pincode" name="pincode" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+        <label for="edit-landmark" class="block text-lg mb-2">Landmark:</label>
+        <input type="text" id="edit-landmark" name="landmark" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+        <label for="edit-address" class="block text-lg mb-2">Full Address:</label>
+        <textarea id="edit-address" name="address" rows="3" class="w-full p-2 border border-gray-300 rounded mb-4" required></textarea>
+        <button type="button" id="locate-btn" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">Locate Me</button>
+        <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300 mt-4">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add New Address Modal -->
+  <div id="add-address-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="modal-content bg-white p-6 rounded-lg shadow-lg relative">
+      <span class="close-btn text-gray-600 cursor-pointer absolute top-2 right-2">&times;</span>
+      <h2 class="text-2xl font-semibold mb-4">Add New Address</h2>
+      <form id="add-address-form">
+        <label for="new-street" class="block text-lg mb-2">Street:</label>
+        <input type="text" id="new-street" name="street" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+        <label for="new-locality" class="block text-lg mb-2">Locality:</label>
+        <input type="text" id="new-locality" name="locality" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+        <label for="new-pincode" class="block text-lg mb-2">Pin Code:</label>
+        <input type="text" id="new-pincode" name="pincode" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+        <label for="new-landmark" class="block text-lg mb-2">Landmark:</label>
+        <input type="text" id="new-landmark" name="landmark" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+        <label for="new-address" class="block text-lg mb-2">Full Address:</label>
+        <textarea id="new-address" name="address" rows="3" class="w-full p-2 border border-gray-300 rounded mb-4" required></textarea>
+        <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300 mt-4">Save Address</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { db } from "./assets/js/firebase.js";
+    import { doc, updateDoc, arrayUnion, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+    document.addEventListener('DOMContentLoaded', async function () {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const authBtn = document.getElementById('auth-btn');
+      const userName = document.getElementById('user-name');
+      const userEmail = document.getElementById('user-email');
+      const addressesContainer = document.getElementById('addresses-container');
+      const ordersList = document.getElementById('orders-list');
+      const wishlistList = document.getElementById('wishlist-list');
+      const addressBtn = document.getElementById('address-btn');
+      const editAccountModal = document.getElementById('edit-account-modal');
+      const addAddressModal = document.getElementById('add-address-modal');
+      const closeBtns = document.querySelectorAll('.close-btn');
+      const editAccountForm = document.getElementById('edit-account-form');
+      const addAddressForm = document.getElementById('add-address-form');
+      const locateBtn = document.getElementById('locate-btn');
+
+      let currentAddressIndex = null;
+
+      if (user && localStorage.getItem('isLoggedIn') === 'true') {
+        authBtn.textContent = `Logout (${user.displayName || user.email})`;
+        userName.textContent = user.displayName || user.email;
+        userEmail.textContent = user.email;
+
+        // Fetch user-specific data from Firestore
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          user.addresses = userData.addresses || [];
+          user.orders = userData.orders || [];
+          user.wishlist = userData.wishlist || [];
+          localStorage.setItem('user', JSON.stringify(user));
+        }
+
+        function renderAddresses() {
+          addressesContainer.innerHTML = '';
+          if (user.addresses && user.addresses.length > 0) {
+            user.addresses.forEach((address, index) => {
+              const addressItem = document.createElement('div');
+              addressItem.classList.add('address-item', 'bg-white', 'p-4', 'rounded-lg', 'shadow-md', 'mb-4');
+              addressItem.innerHTML = `
+                <div>
+                  <p><strong>Street:</strong> ${address.street}</p>
+                  <p><strong>Locality:</strong> ${address.locality}</p>
+                  <p><strong>Pin Code:</strong> ${address.pincode}</p>
+                  <p><strong>Landmark:</strong> ${address.landmark}</p>
+                  <p><strong>Full Address:</strong> ${address.fullAddress}</p>
+                </div>
+                <div class="flex space-x-2 mt-2">
+                  <button class="edit-btn bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 transition duration-300" data-index="${index}">Edit</button>
+                  <button class="delete-btn bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700 transition duration-300" data-index="${index}">Delete</button>
+                </div>
+              `;
+              addressesContainer.appendChild(addressItem);
+            });
+          } else {
+            addressesContainer.innerHTML = '<p>No addresses found.</p>';
+          }
+        }
+
+        function renderOrders() {
+          ordersList.innerHTML = '';
+          if (user.orders && user.orders.length > 0) {
+            user.orders.forEach(order => {
+              const orderItem = document.createElement('li');
+              orderItem.textContent = `Order #${order.id} - Status: ${order.status}`;
+              ordersList.appendChild(orderItem);
+            });
+          } else {
+            ordersList.innerHTML = '<p>No orders found.</p>';
+          }
+        }
+
+        function renderWishlist() {
+          wishlistList.innerHTML = '';
+          if (user.wishlist && user.wishlist.length > 0) {
+            user.wishlist.forEach(item => {
+              const wishlistItem = document.createElement('li');
+              wishlistItem.textContent = item;
+              wishlistList.appendChild(wishlistItem);
+            });
+          } else {
+            wishlistList.innerHTML = '<p>No wishlist items found.</p>';
+          }
+        }
+
+        renderAddresses();
+        renderOrders();
+        renderWishlist();
+
+        authBtn.addEventListener('click', function () {
+          localStorage.removeItem('user');
+          localStorage.setItem('isLoggedIn', 'false');
+          alert('Logged out successfully');
+          window.location.reload();
+        });
+
+        addressBtn.addEventListener('click', function () {
+          addAddressModal.classList.remove('hidden');
+        });
+
+        addressesContainer.addEventListener('click', function (event) {
+          if (event.target.classList.contains('edit-btn')) {
+            currentAddressIndex = event.target.getAttribute('data-index');
+            const address = user.addresses[currentAddressIndex];
+            editAccountModal.classList.remove('hidden');
+            document.getElementById('edit-name').value = user.displayName || '';
+            document.getElementById('edit-email').value = user.email || '';
+            document.getElementById('edit-street').value = address.street || '';
+            document.getElementById('edit-locality').value = address.locality || '';
+            document.getElementById('edit-pincode').value = address.pincode || '';
+            document.getElementById('edit-landmark').value = address.landmark || '';
+            document.getElementById('edit-address').value = address.fullAddress || '';
+          } else if (event.target.classList.contains('delete-btn')) {
+            const index = event.target.getAttribute('data-index');
+            user.addresses.splice(index, 1);
+            localStorage.setItem('user', JSON.stringify(user));
+            renderAddresses();
+            alert('Address deleted successfully');
+            // Update Firestore
+            const userRef = doc(db, "users", user.uid);
+            updateDoc(userRef, {
+              addresses: user.addresses
+            });
+          }
+        });
+
+        closeBtns.forEach(btn => {
+          btn.addEventListener('click', function () {
+            editAccountModal.classList.add('hidden');
+            addAddressModal.classList.add('hidden');
+          });
+        });
+
+        window.addEventListener('click', function (event) {
+          if (event.target === editAccountModal || event.target === addAddressModal) {
+            editAccountModal.classList.add('hidden');
+            addAddressModal.classList.add('hidden');
+          }
+        });
+
+        locateBtn.addEventListener('click', function () {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+              const lat = position.coords.latitude;
+              const lng = position.coords.longitude;
+              const geocoder = new google.maps.Geocoder();
+              const latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+
+              geocoder.geocode({ location: latlng }, function (results, status) {
+                if (status === 'OK') {
+                  if (results[0]) {
+                    document.getElementById('edit-address').value = results[0].formatted_address;
+                  } else {
+                    alert('No results found');
+                  }
+                } else {
+                  alert('Geocoder failed due to: ' + status);
+                }
+              });
+            });
+          } else {
+            alert('Geolocation is not supported by this browser.');
+          }
+        });
+
+        editAccountForm.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          const updatedName = document.getElementById('edit-name').value;
+          const updatedEmail = document.getElementById('edit-email').value;
+          const updatedStreet = document.getElementById('edit-street').value;
+          const updatedLocality = document.getElementById('edit-locality').value;
+          const updatedPincode = document.getElementById('edit-pincode').value;
+          const updatedLandmark = document.getElementById('edit-landmark').value;
+          const updatedAddress = document.getElementById('edit-address').value;
+
+          user.displayName = updatedName;
+          user.email = updatedEmail;
+
+          const newAddress = {
+            street: updatedStreet,
+            locality: updatedLocality,
+            pincode: updatedPincode,
+            landmark: updatedLandmark,
+            fullAddress: updatedAddress
+          };
+
+          if (currentAddressIndex !== null) {
+            user.addresses[currentAddressIndex] = newAddress;
+          } else {
+            if (!user.addresses) {
+              user.addresses = [];
+            }
+            user.addresses.push(newAddress);
+          }
+
+          localStorage.setItem('user', JSON.stringify(user));
+          alert('Account information updated successfully');
+          renderAddresses();
+          editAccountModal.style.display = 'none';
+
+          // Update Firestore
+          const userRef = doc(db, "users", user.uid);
+          await updateDoc(userRef, {
+            addresses: user.addresses
+          });
+        });
+
+        addAddressForm.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          const newStreet = document.getElementById('new-street').value;
+          const newLocality = document.getElementById('new-locality').value;
+          const newPincode = document.getElementById('new-pincode').value;
+          const newLandmark = document.getElementById('new-landmark').value;
+          const newAddress = document.getElementById('new-address').value;
+
+          const address = {
+            street: newStreet,
+            locality: newLocality,
+            pincode: newPincode,
+            landmark: newLandmark,
+            fullAddress: newAddress
+          };
+
+          if (!user.addresses) {
+            user.addresses = [];
+          }
+          user.addresses.push(address);
+
+          localStorage.setItem('user', JSON.stringify(user));
+          alert('New address added successfully');
+          renderAddresses();
+          addAddressModal.style.display = 'none';
+
+          // Update Firestore
+          const userRef = doc(db, "users", user.uid);
+          await updateDoc(userRef, {
+            addresses: arrayUnion(address)
+          });
+        });
+
+        // Fetch favorite items from favorite.html and add to wishlist
+        const favoriteResponse = await fetch('favorite.html');
+        const favoriteText = await favoriteResponse.text();
+        const favoriteParser = new DOMParser();
+        const favoriteDoc = favoriteParser.parseFromString(favoriteText, 'text/html');
+        const favoriteItems = favoriteDoc.querySelectorAll('.favorite-item');
+        favoriteItems.forEach(item => {
+          const wishlistItem = document.createElement('li');
+          wishlistItem.textContent = item.textContent;
+          wishlistList.appendChild(wishlistItem);
+        });
+
+        // Fetch previous orders and add to orders section
+        const ordersResponse = await fetch('orders.html');
+        const ordersText = await ordersResponse.text();
+        const ordersParser = new DOMParser();
+        const ordersDoc = ordersParser.parseFromString(ordersText, 'text/html');
+        const orderItems = ordersDoc.querySelectorAll('.order-item');
+        orderItems.forEach(item => {
+          const orderItem = document.createElement('li');
+          orderItem.textContent = item.textContent;
+          ordersList.appendChild(orderItem);
+        });
+      } else {
+        authBtn.textContent = 'Login/Signup';
+        authBtn.addEventListener('click', function () {
+          window.location.href = 'login.html';
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #ff7f50;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .checkout-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2rem;
+    }
+
+    .checkout-form {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .form-section {
+      margin-bottom: 2rem;
+    }
+
+    .form-section h2 {
+      color: #333;
+      margin-bottom: 1.5rem;
+      font-size: 1.25rem;
+      border-bottom: 2px solid #ff7f50;
+      padding-bottom: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #ff7f50;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,127,80,0.1);
+    }
+
+    .order-summary {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .order-summary h2 {
+      color: #333;
+      margin-bottom: 1.5rem;
+      font-size: 1.25rem;
+      border-bottom: 2px solid #ff7f50;
+      padding-bottom: 0.5rem;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-item.total {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .payment-methods {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .payment-method {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #fff;
+    }
+
+    .payment-method:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-color: #ff7f50;
+    }
+
+    .payment-method.selected {
+      border-color: #ff7f50;
+      background-color: rgba(255,127,80,0.05);
+      box-shadow: 0 4px 12px rgba(255,127,80,0.1);
+    }
+
+    .payment-icon {
+      width: 50px;
+      height: 32px;
+      object-fit: contain;
+      margin-bottom: 0.75rem;
+    }
+
+    .cod-info {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.25rem;
+      line-height: 1.4;
+    }
+
+
+    .checkout-btn {
+      width: 100%;
+      background: #ff7f50;
+      color: white;
+      border: none;
+      padding: 1rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+    }
+
+    .checkout-btn:hover {
+      background: #ff6347;
+    }
+
+    @media (max-width: 768px) {
+      .checkout-container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        gap: 1rem;
+      }
+      
+      .checkout-form,
+      .order-summary {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Checkout</h1>
+  </header>
+  <main class="checkout-container">
+    <div class="checkout-form">
+      <div class="form-section">
+        <h2>Shipping Information</h2>
+        <div class="form-group">
+          <label for="full-name">Full Name</label>
+          <input type="text" id="full-name" required>
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" id="address" required>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" id="city" required>
+        </div>
+        <div class="form-group">
+          <label for="state">State</label>
+          <input type="text" id="state" required>
+        </div>
+        <div class="form-group">
+          <label for="zip">ZIP Code</label>
+          <input type="text" id="zip" required>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>Payment Information</h2>
+        <div class="payment-methods">
+          <div class="payment-method">
+            <input type="radio" name="payment-method" id="credit-card" checked>
+            <label for="credit-card">
+              <img src="assets/images/payment/card.webp" alt="Cards" class="payment-icon">
+
+              <div>Credit/Debit Card</div>
+            </label>
+          </div>
+          <div class="payment-method">
+            <input type="radio" name="payment-method" id="paypal">
+            <label for="paypal">
+              <img src="assets/images/payment/upi-logo.webp" alt="PayPal" class="payment-icon">
+
+              <div>UPI</div>
+            </label>
+          </div>
+          <div class="payment-method">
+            <input type="radio" name="payment-method" id="cod">
+            <label for="cod">
+              <img src="assets/images/payment/500_F_529174326_fdAZdqWizV4GVKRwoTQ3VRb1cmJ1ovxl.webp" alt="Cash on Delivery" class="payment-icon">
+
+              <div>Cash on Delivery</div>
+              <div class="cod-info">Pay when you receive your order</div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <div class="summary-item">
+        <span>Subtotal</span>
+        <span>₹<span id="subtotal">0.00</span></span>
+      </div>
+      <div class="summary-item">
+        <span>Shipping</span>
+        <span>₹0.00</span>
+      </div>
+      <div class="summary-item total">
+        <span>Total</span>
+        <span>₹<span id="total">0.00</span></span>
+      </div>
+      <button class="checkout-btn">Place Order</button>
+    </div>
+  </main>
+  <script>
+    // Fetch and update cart total from localStorage
+    const updateOrderSummary = () => {
+      const cartTotal = localStorage.getItem('cartTotal') || '0.00';
+      const subtotalElement = document.getElementById('subtotal');
+      const totalElement = document.getElementById('total');
+      
+      subtotalElement.textContent = cartTotal;
+      totalElement.textContent = cartTotal;
+    };
+
+    // Initialize and watch for changes
+    updateOrderSummary();
+    window.addEventListener('storage', updateOrderSummary);
+
+
+    // Handle payment method selection
+    const paymentMethods = document.querySelectorAll('.payment-method');
+    paymentMethods.forEach(method => {
+      method.addEventListener('click', () => {
+        paymentMethods.forEach(m => m.classList.remove('selected'));
+        method.classList.add('selected');
+      });
+    });
+
+    // Handle checkout button click
+    document.querySelector('.checkout-btn').addEventListener('click', () => {
+      alert('Order placed successfully!');
+      localStorage.removeItem('cart');
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
